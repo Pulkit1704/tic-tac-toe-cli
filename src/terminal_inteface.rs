@@ -1,3 +1,4 @@
+use std::io;
 use std::io::Write;
 use std::io::stdin; 
 use std::io::stdout; 
@@ -5,7 +6,7 @@ use std::io::stdout;
 pub fn print_grid(grid_values: &Vec<String>){
 
     if grid_values.len() != 9{
-        println!("no enough values to make the grid"); 
+        println!("no enough values to make the grid, {}", grid_values.len()); 
         return; 
     }
 
@@ -34,11 +35,14 @@ pub fn show_player_prompt(){
 
     stdout.flush().expect("can't flush stdout: ");
 
+}
+
+pub fn read_input()-> io::Result<String>{
+
     let mut buffer = String::new(); 
-    stdin().read_line(&mut buffer).expect("can't read the argument"); 
 
-    let args: Vec<&str> = buffer.split_whitespace().collect(); 
+    stdin().read_line(&mut buffer)?; 
 
-    println!("{:?}", args)
-
+    Ok(buffer) 
+    
 }
