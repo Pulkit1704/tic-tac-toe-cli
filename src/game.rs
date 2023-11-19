@@ -14,9 +14,10 @@ pub fn get_game_grid()-> Vec<String> {
 
 pub fn play_turn(position: usize, game_grid: &mut Vec<String>, active_player_character: &str){
 
-    // todo: check if the position is already filled with the character 
-    // todo: check if the position provied is within the bounds 
+    if game_grid[position-1] != "-"{
+        println!("position already filled... pick another spot"); 
+    }
 
-    game_grid[position] = active_player_character.to_string(); 
+    game_grid[position-1] = active_player_character.to_string(); 
 
 }

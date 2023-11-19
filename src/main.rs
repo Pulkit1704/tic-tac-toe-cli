@@ -16,7 +16,7 @@ fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
 
     loop{
         print_grid(game_grid);
-        show_player_prompt(); 
+        show_player_prompt(active_player); 
 
         let user_input = read_input(); 
 
@@ -27,11 +27,30 @@ fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
                 if args.len() > 1 {
                     println!("too many arguments provided... only the first one will be used"); 
                 }
+                let position = args[0].parse::<usize>();  
 
-                // todo: dont make the thread panic if the player enters the wrong value for number.eat up their turn insted.
-                let position = args[0].parse::<usize>().unwrap();  
+                match position {
+                    Ok(position)=> {
 
-                play_turn(position, game_grid, active_player); 
+                        if position < 1 || position > 9{
+                            println!("value not in grid bounds... enter value between 1 and 9"); 
+                            continue; 
+                        }else{
+                            if game_grid[position -1] != "-"{
+                                println!("position already taken... take another turn"); 
+                                continue; 
+                            }else{
+                                play_turn(position, game_grid, active_player); 
+                                active_player = if active_player == player_1 {player_2} else {player_1}; 
+                            }
+                        }
+                        
+                    }, 
+
+                    Err(_e) => {
+                        println!("argument provided not a number, next player gets a turn"); 
+                    }
+                }
             
             }, 
 
@@ -39,10 +58,6 @@ fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
                 println!("{}", message); 
             }
         }
-
-
-        active_player = if active_player == player_1 {player_2} else {player_1}; 
-
     }
 }
 
