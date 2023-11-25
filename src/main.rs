@@ -12,7 +12,7 @@ fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
     //repeat 
 
     let mut active_player = player_1; 
-    
+
     // game will be over when play_turn sets this variable to 1
     let mut game_over_status = 0; 
 
@@ -26,9 +26,11 @@ fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
             Ok(arg_str) => {
                 let args: Vec<&str> = arg_str.split_whitespace().collect(); 
 
-                if args.len() > 1 {
-                    println!("too many arguments provided... only the first one will be used"); 
+                if args.len() != 1 {
+                    println!("please provide only one number between 1 and 9"); 
+                    continue; 
                 }
+                
                 let position = args[0].parse::<usize>();  
 
                 match position {
