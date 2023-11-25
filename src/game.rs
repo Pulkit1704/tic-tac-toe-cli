@@ -26,7 +26,7 @@ pub fn play_turn(position: usize, game_grid: &mut Vec<String>, active_player_cha
     }else{
         if is_game_over(game_grid){
             println!("game over, nobody won :(");
-            return 0;  
+            return 1;  
         }
     }
 
