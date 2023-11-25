@@ -26,7 +26,7 @@ pub fn print_grid(grid_values: &Vec<String>){
 }
 
 
-pub fn show_player_prompt(player_symbol: &str){
+pub fn show_player_prompt(player_symbol: &str){ 
 
     let mut stdout = stdout(); 
     print!("player {}'s turn, pick a spot: ", player_symbol);

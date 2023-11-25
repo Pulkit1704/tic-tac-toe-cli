@@ -1,4 +1,3 @@
-
 mod terminal_inteface;
 mod game;
 
@@ -13,8 +12,11 @@ fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
     //repeat 
 
     let mut active_player = player_1; 
+    
+    // game will be over when play_turn sets this variable to 1
+    let mut game_over_status = 0; 
 
-    loop{
+    while game_over_status == 0{
         print_grid(game_grid);
         show_player_prompt(active_player); 
 
@@ -40,7 +42,7 @@ fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
                                 println!("position already taken... take another turn"); 
                                 continue; 
                             }else{
-                                play_turn(position, game_grid, active_player); 
+                                game_over_status = play_turn(position, game_grid, active_player); 
                                 active_player = if active_player == player_1 {player_2} else {player_1}; 
                             }
                         }
@@ -48,7 +50,8 @@ fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
                     }, 
 
                     Err(_e) => {
-                        println!("argument provided not a number, next player gets a turn"); 
+                        println!("argument provided not a number try again... "); 
+                        continue; 
                     }
                 }
             
