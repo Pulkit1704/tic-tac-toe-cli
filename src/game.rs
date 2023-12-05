@@ -12,12 +12,12 @@ pub fn get_game_grid()-> Vec<String> {
 }
 
 // * give out an exit code to tell the main function that game is over. 
-pub fn play_turn(position: usize, game_grid: &mut Vec<String>, active_player_character: &str)-> i32{
+pub fn play_turn(position: usize, game_grid: &mut Vec<String>, active_player: &str)-> i32{
 
-    game_grid[position-1] = active_player_character.to_string(); 
+    game_grid[position-1] = active_player.to_string(); 
 
-    if player_won(game_grid, active_player_character) {
-        println!("game over, {active_player_character} won!!!"); 
+    if player_won(game_grid, active_player) {
+        println!("game over, {active_player} won!!!"); 
         return 1;
     }else{
         if is_game_over(game_grid){
@@ -30,9 +30,9 @@ pub fn play_turn(position: usize, game_grid: &mut Vec<String>, active_player_cha
 
 }
 
-fn player_won(game_grid: &Vec<String>, active_player_character: &str) -> bool{
+fn player_won(game_grid: &Vec<String>, active_player: &str) -> bool{
 
-    return column_check(game_grid, active_player_character) || row_check(game_grid, active_player_character)|| diagonal_check(game_grid, active_player_character); 
+    return column_check(game_grid, active_player) || row_check(game_grid, active_player)|| diagonal_check(game_grid, active_player); 
 
 }
 
@@ -83,9 +83,7 @@ fn is_game_over(game_grid: &Vec<String>)-> bool{
     for element in game_grid{
         if element == "-"{
             return false; 
-            
         }
     }; 
     return true; 
-
 }

@@ -5,15 +5,10 @@ use game::{get_game_grid, play_turn};
 use terminal_inteface::{print_grid, show_player_prompt, read_input}; 
 
 fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
-    // show the play grid, 
-    // wait for user input, 
-    // update the specified position with the player's character 
-    // show the play grid, 
-    //repeat 
 
     let mut active_player = player_1; 
 
-    // game will be over when play_turn sets this variable to 1
+    // game will be over when play_turn function sets this variable to 1
     let mut game_over_status = 0; 
 
     while game_over_status == 0{
@@ -44,9 +39,12 @@ fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
                                 println!("position already taken... take another turn"); 
                                 continue; 
                             }else{
-                                game_over_status = play_turn(position, game_grid, active_player); 
-                                active_player = if active_player == player_1 {player_2} else {player_1}; 
+
+                            game_over_status = play_turn(position, game_grid, active_player); 
+                            active_player = if active_player == player_1 {player_2} else {player_1}; 
+
                             }
+
                         }
                         
                     }, 
@@ -56,9 +54,8 @@ fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
                         continue; 
                     }
                 }
-            
             }, 
-
+            
             Err(message) => {
                 println!("{}", message); 
             }
