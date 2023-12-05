@@ -14,10 +14,6 @@ pub fn get_game_grid()-> Vec<String> {
 // * give out an exit code to tell the main function that game is over. 
 pub fn play_turn(position: usize, game_grid: &mut Vec<String>, active_player_character: &str)-> i32{
 
-    if game_grid[position-1] != "-"{
-        println!("position already filled... pick another spot"); 
-    }
-
     game_grid[position-1] = active_player_character.to_string(); 
 
     if player_won(game_grid, active_player_character) {
