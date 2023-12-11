@@ -21,7 +21,7 @@ fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
         match arg_parse_result{
             Ok(position) =>{
 
-                if game_grid[position -1] != "-"{
+                if game_grid[position -1] == "X" || game_grid[position-1] == "O"{
                     println!("position alread taken, pick another one..."); 
                     continue; 
                 }

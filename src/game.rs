@@ -2,8 +2,8 @@ pub fn get_game_grid()-> Vec<String> {
 
     let mut game_grid = Vec::new(); 
 
-    for _ in 0..9{
-        game_grid.push("-".to_string()); 
+    for i in 0..9{
+        game_grid.push((i+1).to_string()); 
     }
 
     return game_grid; 
@@ -79,8 +79,10 @@ fn diagonal_check(game_grid: &Vec<String>, character: &str)-> bool{
 fn is_game_over(game_grid: &Vec<String>)-> bool{
 
     for element in game_grid{
-        if element == "-"{
+        if let Ok(_value) = element.trim().parse::<i32>(){
             return false; 
+        }else{
+            continue; 
         }
     }; 
     return true; 
