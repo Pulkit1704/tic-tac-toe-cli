@@ -44,3 +44,38 @@ pub fn read_input()-> io::Result<String>{
     Ok(buffer) 
     
 }
+
+pub fn parse_arguments()-> Result<usize, &'static str> {
+    
+    let user_input = read_input(); 
+
+    match user_input{
+        Ok(arg_str)=>{
+            let args: Vec<&str> = arg_str.split_whitespace().collect(); 
+
+            if args.len() != 1{
+                return Err("please provide only one input number between 1 and 9"); 
+            }else{
+                let position = args[0].parse::<usize>(); 
+
+                match position{
+                    Ok(position) => {
+                        if position < 1|| position > 9{
+                            return Err("value not in grid bounds... enter number between 1 and 9"); 
+                        }else{
+                            return Ok(position); 
+                        }
+                    }, 
+
+                    Err(_integer_parse_error)=>{
+                        return Err("The input provided is not a number...");
+                    }
+                }
+            }
+        }
+
+        Err(_input_read_error)=>{
+            return Err("could not read input... try again"); 
+        }
+    }
+}

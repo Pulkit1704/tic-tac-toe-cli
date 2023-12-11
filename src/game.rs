@@ -1,5 +1,3 @@
-
-
 pub fn get_game_grid()-> Vec<String> {
 
     let mut game_grid = Vec::new(); 

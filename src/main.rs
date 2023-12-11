@@ -2,7 +2,7 @@ mod terminal_inteface;
 mod game;
 
 use game::{get_game_grid, play_turn}; 
-use terminal_inteface::{print_grid, show_player_prompt, read_input}; 
+use terminal_inteface::{print_grid, show_player_prompt, parse_arguments}; 
 
 fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
 
@@ -14,50 +14,26 @@ fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
     while game_over_status == 0{
         print_grid(game_grid);
         show_player_prompt(active_player); 
+        
+        // * use the parse_arguments function here 
+        let arg_parse_result = parse_arguments(); 
 
-        let user_input = read_input(); 
+        match arg_parse_result{
+            Ok(position) =>{
 
-        match user_input{
-            Ok(arg_str) => {
-                let args: Vec<&str> = arg_str.split_whitespace().collect(); 
-
-                if args.len() != 1 {
-                    println!("please provide only one number between 1 and 9"); 
+                if game_grid[position -1] != "-"{
+                    println!("position alread taken, pick another one..."); 
                     continue; 
                 }
-                
-                let position = args[0].parse::<usize>();  
 
-                match position {
-                    Ok(position)=> {
-
-                        if position < 1 || position > 9{
-                            println!("value not in grid bounds... enter value between 1 and 9"); 
-                            continue; 
-                        }else{
-                            if game_grid[position -1] != "-"{
-                                println!("position already taken... take another turn"); 
-                                continue; 
-                            }else{
-
-                            game_over_status = play_turn(position, game_grid, active_player); 
-                            active_player = if active_player == player_1 {player_2} else {player_1}; 
-
-                            }
-
-                        }
-                        
-                    }, 
-
-                    Err(_e) => {
-                        println!("argument provided not a number try again... "); 
-                        continue; 
-                    }
-                }
+                game_over_status = play_turn(position, game_grid, active_player); 
+                active_player = if active_player == player_1 {player_2} else {player_1}; 
+                continue; 
             }, 
-            
-            Err(message) => {
-                println!("{}", message); 
+
+            Err(e) =>{
+                println!("GAME ERROR: {e}"); 
+                continue; 
             }
         }
     }
