@@ -9,22 +9,22 @@ pub fn get_game_grid()-> Vec<String> {
     return game_grid; 
 }
 
-// * give out an exit code to tell the main function that game is over. 
-pub fn play_turn(position: usize, game_grid: &mut Vec<String>, active_player: &str)-> i32{
+// * give out a boolean value to the main function about the status of the game. 
+pub fn play_turn(position: usize, game_grid: &mut Vec<String>, active_player: &str)-> bool{
 
     game_grid[position-1] = active_player.to_string(); 
 
     if player_won(game_grid, active_player) {
         println!("game over, {active_player} won!!!"); 
-        return 1;
+        return true;
     }else{
         if is_game_over(game_grid){
             println!("game over, nobody won :(");
-            return 1;  
+            return true;  
         }
     }
 
-    return 0; 
+    return false; 
 
 }
 

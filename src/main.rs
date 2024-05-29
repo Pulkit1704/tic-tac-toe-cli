@@ -8,10 +8,10 @@ fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
 
     let mut active_player = player_1; 
 
-    // game will be over when play_turn function sets this variable to 1
-    let mut game_over_status = 0; 
+    // game will be over when play_turn function sets this variable to true
+    let mut game_over = false; 
 
-    while game_over_status == 0{
+    while !game_over{
         print_grid(game_grid);
         show_player_prompt(active_player); 
         
@@ -26,7 +26,7 @@ fn run_prompt(game_grid: &mut Vec<String>, player_1: &str, player_2: &str){
                     continue; 
                 }
 
-                game_over_status = play_turn(position, game_grid, active_player); 
+                game_over = play_turn(position, game_grid, active_player); 
                 active_player = if active_player == player_1 {player_2} else {player_1}; 
                 continue; 
             }, 
